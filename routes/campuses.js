@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 const { Campus } = require("../database/models");
 
-const campuses = [
+const mockCampusesArray = [
   {
     id: "3434454",
     name: "Brooklyn College",
@@ -31,12 +31,14 @@ router.get("/", (req, res, next) => {
   // Campus.findAll()
   //   .then((campuses) => res.json(campuses))
   //   .catch((err) => console.log(err));
-  res.json(campuses);
+  res.json(mockCampusesArray);
 });
 
 // Route to serve single campus based on its id
 router.get("/:id", (req, res, next) => {
-  const campus = campuses.find((campus) => campus.id === req.params.id);
+  const campus = mockCampusesArray.find(
+    (campus) => campus.id === req.params.id
+  );
 
   res.json(campus);
 });
