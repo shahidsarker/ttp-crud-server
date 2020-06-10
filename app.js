@@ -55,8 +55,6 @@ const configureApp = () => {
   app.use(compression());
   app.use(cookieParser());
 
-  app.use(express.static(path.join(__dirname, "public")));
-
   // Mount our apiRouter
   app.use("/api", apiRouter);
 
@@ -81,7 +79,7 @@ const configureApp = () => {
 
 // Main function declaration;
 const bootApp = async () => {
-  await syncDatabase();
+  // await syncDatabase();
   await configureApp();
 };
 
