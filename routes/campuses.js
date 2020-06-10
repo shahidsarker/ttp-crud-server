@@ -33,7 +33,7 @@ router.get("/", (req, res, next) => {
   //   .then((campuses) => res.json(campuses))
   //   .catch((err) => console.log(err));
   const campuses = mockCampusesArray;
-  res.json(campuses);
+  res.status(200).json(campuses);
 });
 
 // Route to serve single campus based on its id
@@ -46,7 +46,7 @@ router.get("/:id", (req, res, next) => {
   const campus = mockCampusesArray.find((campus) => campus.id === id);
   // if successful:
   // send back the campus as a response
-  res.json(campus);
+  res.status(200).json(campus);
   // if error:
   // handle error
 });
@@ -69,7 +69,7 @@ router.post("/", (req, res, next) => {
   };
 
   mockCampusesArray.push(newCampus);
-  res.send(newCampus);
+  res.status(201).send(newCampus);
 
   console.log(newCampus);
 });
@@ -98,7 +98,7 @@ router.put("/:id", (req, res, next) => {
   // if error:
   // handle the error
 
-  res.send(newCampus);
+  res.status(201).send(newCampus);
 });
 
 // Route to handle removing a campus
@@ -109,7 +109,7 @@ router.delete("/:id", (req, res, next) => {
   // pass the id to the database to delete a campus
   // database would either respond succcess or fail
   // send a success or fail response to the client
-  res.send("Campus deleted");
+  res.status(204);
 });
 
 module.exports = router;
