@@ -45,12 +45,49 @@ router.get("/:id", (req, res, next) => {
 
 // Route to handle adding a campus
 router.post("/", (req, res, next) => {
-  res.send("Route to handle adding a campus");
+  // Take the form data from the request body
+  console.log(req.body);
+  // Create a new campus on the database
+  // The database would return a campus
+  // send that campus as a json to the client
+
+  const newCampus = {
+    id: Math.floor(500 * Math.random()).toString(),
+    name: req.body.name,
+    address: "",
+    imageUrl: "",
+    description: "",
+  };
+
+  mockCampusesArray.push(newCampus);
+  res.send(newCampus);
+
+  console.log(newCampus);
 });
 
 // Route to handle editing a campus
 router.put("/:id", (req, res, next) => {
-  res.send("Route to handle editing a campus");
+  // get the id from request params
+  const { id } = req.params;
+  // get form data from the request body
+  const { description } = req.body;
+  console.log(id, description);
+
+  const campusIndex = mockCampusesArray.findIndex((c) => c.id === id);
+  const newCampus = { ...mockCampusesArray[campusIndex], description };
+  mockCampusesArray[campusIndex] = newCampus;
+
+  // Find a campus with a matching id from the database
+  // database would return a valid campus object or an error
+  // if successfull:
+  // modify the campus object with new form data
+  // save the new campus object to the data
+  // database would return a new campus object
+  // send the newCampus as a response from the API
+  // if error:
+  // handle the error
+
+  res.send(newCampus);
 });
 
 // Route to handle removing a campus
