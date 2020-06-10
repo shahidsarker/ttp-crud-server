@@ -1,7 +1,7 @@
 const Sequelize = require("sequelize");
 const db = require("../db");
 
-const Player = db.define("player", {
+const Campus = db.define("campus", {
   firstName: {
     type: Sequelize.STRING,
     allowNull: false,
@@ -18,4 +18,4 @@ const Player = db.define("player", {
   },
 });
 
-module.exports = Player;
+module.exports = Campus;
