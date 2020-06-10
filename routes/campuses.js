@@ -1,8 +1,8 @@
 var express = require("express");
 var router = express.Router();
-const { Campus } = require("../database/models");
+// const { Campus } = require("../database/models");
 
-const mockCampusesArray = [
+let mockCampusesArray = [
   {
     id: "3434454",
     name: "Brooklyn College",
@@ -27,23 +27,32 @@ const mockCampusesArray = [
 ];
 
 /* GET all campuses. */
+// /api/campuses
 router.get("/", (req, res, next) => {
   // Campus.findAll()
   //   .then((campuses) => res.json(campuses))
   //   .catch((err) => console.log(err));
-  res.json(mockCampusesArray);
+  const campuses = mockCampusesArray;
+  res.json(campuses);
 });
 
 // Route to serve single campus based on its id
+// /api/campuses/:id
+// /api/campuses/456 would respond with a campus with id 456
 router.get("/:id", (req, res, next) => {
-  const campus = mockCampusesArray.find(
-    (campus) => campus.id === req.params.id
-  );
-
+  // take the id from params
+  const { id } = req.params;
+  // query the database for a campus with matching id
+  const campus = mockCampusesArray.find((campus) => campus.id === id);
+  // if successful:
+  // send back the campus as a response
   res.json(campus);
+  // if error:
+  // handle error
 });
 
 // Route to handle adding a campus
+// /api/campuses/
 router.post("/", (req, res, next) => {
   // Take the form data from the request body
   console.log(req.body);
@@ -66,6 +75,8 @@ router.post("/", (req, res, next) => {
 });
 
 // Route to handle editing a campus
+// /api/campuses/:id
+// /api/campuses/456 would modify a campus with id 456
 router.put("/:id", (req, res, next) => {
   // get the id from request params
   const { id } = req.params;
@@ -92,7 +103,13 @@ router.put("/:id", (req, res, next) => {
 
 // Route to handle removing a campus
 router.delete("/:id", (req, res, next) => {
-  res.send("Route to handle removing a campus");
+  const { id } = req.params;
+  mockCampusesArray = mockCampusesArray.filter((campus) => campus.id !== id);
+  // get an id for a campus to delete
+  // pass the id to the database to delete a campus
+  // database would either respond succcess or fail
+  // send a success or fail response to the client
+  res.send("Campus deleted");
 });
 
 module.exports = router;
