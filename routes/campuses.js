@@ -4,19 +4,25 @@ const { Campus } = require("../database/models");
 
 const campuses = [
   {
-    firstName: "Kyrie",
-    lastName: "Irving",
-    jerseyNumber: 11,
+    id: "3434454",
+    name: "Brooklyn College",
+    address: "Brooklyn",
+    imageUrl: "",
+    description: "A college in Brooklyn",
   },
   {
-    firstName: "LeBron",
-    lastName: "James",
-    jerseyNumber: 23,
+    id: "3434455",
+    name: "CSI",
+    address: "Staten Island",
+    imageUrl: "",
+    description: "A college in Staten Island",
   },
   {
-    firstName: "Luka",
-    lastName: "Doncic",
-    jerseyNumber: 77,
+    id: "3434457",
+    name: "John Jay",
+    address: "New York",
+    imageUrl: "",
+    description: "A college in Manhattan",
   },
 ];
 
