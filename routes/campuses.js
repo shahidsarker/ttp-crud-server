@@ -87,18 +87,33 @@ router.post("/", async (req, res, next) => {
 // Route to handle editing a campus
 // /api/campuses/:id
 // /api/campuses/456 would modify a campus with id 456
-router.put("/:id", (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   // get the id from request params
   const { id } = req.params;
   // get form data from the request body
-  const { description } = req.body;
-  console.log(id, description);
-
-  const campusIndex = mockCampusesArray.findIndex((c) => c.id === id);
-  const newCampus = { ...mockCampusesArray[campusIndex], description };
-  mockCampusesArray[campusIndex] = newCampus;
-
+  const { name, address, description, imageUrl } = req.body;
+  const updatedObj = {
+    name: name,
+    address: address,
+    description: description,
+    imageUrl: imageUrl,
+  };
+  try {
+    const campus = await Campus.findByPk(id);
+    console.log(updatedObj);
+    await campus.set(updatedObj);
+    const updatedCampus = await campus.save();
+    console.log(updatedCampus);
+    res.status(201).send(updatedCampus);
+  } catch (err) {
+    next(err);
+  }
   // Find a campus with a matching id from the database
+
+  // const campusIndex = mockCampusesArray.findIndex((c) => c.id === id);
+  // const newCampus = { ...mockCampusesArray[campusIndex], description };
+  // mockCampusesArray[campusIndex] = newCampus;
+
   // database would return a valid campus object or an error
   // if successfull:
   // modify the campus object with new form data
@@ -107,8 +122,6 @@ router.put("/:id", (req, res, next) => {
   // send the newCampus as a response from the API
   // if error:
   // handle the error
-
-  res.status(201).send(newCampus);
 });
 
 // Route to handle removing a campus
