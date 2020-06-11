@@ -63,25 +63,25 @@ router.get("/:id", async (req, res, next) => {
 
 // Route to handle adding a campus
 // /api/campuses/
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res, next) => {
   // Take the form data from the request body
-  console.log(req.body);
-  // Create a new campus on the database
-  // The database would return a campus
-  // send that campus as a json to the client
-
-  const newCampus = {
-    id: Math.floor(500 * Math.random()).toString(),
-    name: req.body.name,
-    address: "",
-    imageUrl: "",
-    description: "",
+  const { name, address, description, imageUrl } = req.body;
+  // Create a campus object
+  const campusObj = {
+    name: name,
+    address: address,
+    imageUrl: imageUrl,
+    description: description,
   };
-
-  mockCampusesArray.push(newCampus);
-  res.status(201).send(newCampus);
-
-  console.log(newCampus);
+  try {
+    // Create a new campus on the database
+    const newCampus = await Campus.create(campusObj);
+    // The database would return a campus
+    // send that campus as a json to the client
+    res.status(201).send(newCampus);
+  } catch (err) {
+    next(err);
+  }
 });
 
 // Route to handle editing a campus
