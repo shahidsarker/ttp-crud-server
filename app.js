@@ -80,7 +80,7 @@ const configureApp = () => {
 
 // Main function declaration;
 const bootApp = async () => {
-  // await syncDatabase();
+  await syncDatabase();
   await configureApp();
 };
 

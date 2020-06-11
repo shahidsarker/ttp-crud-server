@@ -1,13 +1,17 @@
-# ExpressJS - Starter Code
+# TTP CRUD Project - Express Server
 
+## Quick Start
 To start up dev server with nodemon:
 
 ```shell
-// Mac/Linux
+# Run the appropriate command based on your system:
+# On Mac/Linux:
 npm run dev
-// Windows
+# On Windows:
 npm run dev_windows
 ```
+
+## Getting Started
 
 You can either:
 
