@@ -44,16 +44,21 @@ router.get("/", async (req, res, next) => {
 // Route to serve single campus based on its id
 // /api/campuses/:id
 // /api/campuses/456 would respond with a campus with id 456
-router.get("/:id", (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   // take the id from params
   const { id } = req.params;
   // query the database for a campus with matching id
-  const campus = mockCampusesArray.find((campus) => campus.id === id);
-  // if successful:
-  // send back the campus as a response
-  res.status(200).json(campus);
-  // if error:
-  // handle error
+  try {
+    // if successful:
+    const campus = await Campus.findByPk(id);
+    // send back the campus as a response
+    res.status(200).json(campus);
+  } catch (err) {
+    // if error:
+    // handle error
+    next(err);
+  }
+  // const campus = mockCampusesArray.find((campus) => campus.id === id);
 });
 
 // Route to handle adding a campus
