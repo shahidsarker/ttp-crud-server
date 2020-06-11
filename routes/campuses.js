@@ -125,14 +125,21 @@ router.put("/:id", async (req, res, next) => {
 });
 
 // Route to handle removing a campus
-router.delete("/:id", (req, res, next) => {
+router.delete("/:id", async (req, res, next) => {
   const { id } = req.params;
-  mockCampusesArray = mockCampusesArray.filter((campus) => campus.id !== id);
+  // mockCampusesArray = mockCampusesArray.filter((campus) => campus.id !== id);
   // get an id for a campus to delete
+  try {
+    const campus = await Campus.findByPk(id);
+    await campus.destroy();
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+
   // pass the id to the database to delete a campus
   // database would either respond succcess or fail
   // send a success or fail response to the client
-  res.status(204);
 });
 
 module.exports = router;
