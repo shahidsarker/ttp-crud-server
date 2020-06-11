@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-// const { Campus } = require("../database/models");
+const { Campus } = require("../database/models");
 
 let mockCampusesArray = [
   {
@@ -28,50 +28,57 @@ let mockCampusesArray = [
 
 /* GET all campuses. */
 // /api/campuses
-router.get("/", (req, res, next) => {
-  // Campus.findAll()
-  //   .then((campuses) => res.json(campuses))
-  //   .catch((err) => console.log(err));
-  const campuses = mockCampusesArray;
-  res.status(200).json(campuses);
+router.get("/", async (req, res, next) => {
+  try {
+    const campuses = await Campus.findAll();
+    res.status(200).json(campuses);
+  } catch (err) {
+    next(err);
+  }
 });
 
 // Route to serve single campus based on its id
 // /api/campuses/:id
 // /api/campuses/456 would respond with a campus with id 456
-router.get("/:id", (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   // take the id from params
   const { id } = req.params;
-  // query the database for a campus with matching id
-  const campus = mockCampusesArray.find((campus) => campus.id === id);
-  // if successful:
-  // send back the campus as a response
-  res.status(200).json(campus);
-  // if error:
-  // handle error
+  try {
+    // query the database for a campus with matching id
+    const campus = await Campus.findByPk(id);
+    // if successful:
+    // send back the campus as a response
+    res.status(200).json(campus);
+  } catch (err) {
+    // if error:
+    // handle error
+    next(err);
+  }
 });
 
 // Route to handle adding a campus
 // /api/campuses/
-router.post("/", (req, res, next) => {
+router.post("/", async (req, res, next) => {
   // Take the form data from the request body
   console.log(req.body);
-  // Create a new campus on the database
-  // The database would return a campus
-  // send that campus as a json to the client
+  const { name, address, description, imageUrl } = req.body;
+  // Create campus object
 
-  const newCampus = {
-    id: Math.floor(500 * Math.random()).toString(),
-    name: req.body.name,
-    address: "",
-    imageUrl: "",
-    description: "",
+  const campusObj = {
+    name: name,
+    address: address,
+    imageUrl: imageUrl,
+    description: description,
   };
-
-  mockCampusesArray.push(newCampus);
-  res.status(201).send(newCampus);
-
-  console.log(newCampus);
+  try {
+    // Create a new campus on the database
+    const newCampus = await Campus.create(campusObj);
+    // The database would return a campus
+    // send that campus as a json to the client
+    res.status(201).json(newCampus);
+  } catch (err) {
+    next(err);
+  }
 });
 
 // Route to handle editing a campus
@@ -82,7 +89,6 @@ router.put("/:id", (req, res, next) => {
   const { id } = req.params;
   // get form data from the request body
   const { description } = req.body;
-  console.log(id, description);
 
   const campusIndex = mockCampusesArray.findIndex((c) => c.id === id);
   const newCampus = { ...mockCampusesArray[campusIndex], description };
