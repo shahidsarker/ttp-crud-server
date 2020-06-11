@@ -2,20 +2,10 @@ const Sequelize = require("sequelize");
 const db = require("../db");
 
 const Campus = db.define("campus", {
-  firstName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-
-  lastName: {
-    type: Sequelize.STRING,
-    allowNull: false,
-  },
-
-  jerseyNumber: {
-    type: Sequelize.INTEGER,
-    allowNull: false,
-  },
+  name: { type: Sequelize.STRING, allowNull: false },
+  address: { type: Sequelize.STRING, allowNull: true },
+  imageUrl: { type: Sequelize.STRING, allowNull: true },
+  description: { type: Sequelize.STRING, allowNull: true },
 });
 
 module.exports = Campus;
