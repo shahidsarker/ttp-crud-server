@@ -1,6 +1,6 @@
 var express = require("express");
 var router = express.Router();
-// const { Campus } = require("../database/models");
+const { Campus } = require("../database/models");
 
 let mockCampusesArray = [
   {
@@ -28,12 +28,17 @@ let mockCampusesArray = [
 
 /* GET all campuses. */
 // /api/campuses
-router.get("/", (req, res, next) => {
-  // Campus.findAll()
-  //   .then((campuses) => res.json(campuses))
-  //   .catch((err) => console.log(err));
-  const campuses = mockCampusesArray;
-  res.status(200).json(campuses);
+router.get("/", async (req, res, next) => {
+  // try to get campuses object from database
+  try {
+    // campuses will be the result of the Campus.findAll promise
+    const campuses = await Campus.findAll();
+    // if campuses is valid, it will be sent as a json response
+    res.status(200).json(campuses);
+  } catch (err) {
+    // if there is an error, it'll passed via the next parameter to the error handler middleware
+    next(err);
+  }
 });
 
 // Route to serve single campus based on its id
