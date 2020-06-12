@@ -7,7 +7,7 @@ const config = process.env.DATABASE_URL || {
   port: 5432,
   password: process.env.LOCAL_DATABASE_PASSWORD,
 };
-// const config = process.env.DATABASE_URL;
+//const config = process.env.DATABASE_URL;
 
 // The name of the database to create;
 const databaseName = require("./databaseName");
@@ -26,6 +26,7 @@ const cb = (err, res) => {
   console.log(`Successfully created the database: ${databaseName}!`);
 };
 
+//const deleteLocalDatabase
 const createLocalDatabase = () => pgtools.createdb(config, databaseName, cb);
 
 module.exports = createLocalDatabase;
