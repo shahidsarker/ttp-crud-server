@@ -1,13 +1,12 @@
 const pgtools = require("pgtools");
 
 // An object with user, host, port, and password properties;
-const config = process.env.DATABASE_URL || {
+const config = {
   user: "postgres",
   host: "localhost",
   port: 5432,
   password: process.env.LOCAL_DATABASE_PASSWORD,
 };
-// const config = process.env.DATABASE_URL;
 
 // The name of the database to create;
 const databaseName = require("./databaseName");
