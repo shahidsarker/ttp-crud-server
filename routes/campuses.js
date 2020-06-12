@@ -36,6 +36,30 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+// Route to get students associated with a campus
+// /api/campuses/:id/students
+// /api/campuses/456/students
+router.get("/:id/students", async (req, res, next) => {
+  const { id } = req.params;
+  // find the campus associated with the id
+  let foundCampus;
+  try {
+    foundCampus = await Campus.findByPk(id);
+  } catch (err) {
+    next(err);
+  }
+
+  try {
+    const studentsOfCampus = await foundCampus.getStudents();
+    res.status(200).json(studentsOfCampus);
+  } catch (err) {
+    next(err);
+  }
+
+  // find the students associated with the campus
+  // send back an array of students
+});
+
 // Route to handle adding a campus
 // /api/campuses/
 router.post("/", async (req, res, next) => {
