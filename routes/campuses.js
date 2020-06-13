@@ -66,6 +66,7 @@ router.get("/:id/students", async (req, res, next) => {
 router.post("/", async (req, res, next) => {
   // Take the form data from the request body
   const { name, address, description, imageUrl } = req.body;
+  console.log(req.body);
   // Create a campus object
   const campusObj = {
     name: name,

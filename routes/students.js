@@ -31,4 +31,19 @@ router.get("/:id", async (req, res, next) => {
   }
 })
 
+/**
+ * Action: POST new student
+ * ENDPOINT: /api/students/
+ * Return: Newly created student
+ */
+router.post("/", async (req,res,next) =>{
+  const receivedStudent = req.body;
+  try {
+    const newStudent = await Student.create(receivedStudent);
+    res.status(201).json(newStudent);
+  } catch(err) {
+    next(err);
+  }
+})
+
 module.exports = router;
