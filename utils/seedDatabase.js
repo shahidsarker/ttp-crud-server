@@ -10,10 +10,13 @@ const seedDatabase = async () => {
     }),
     Campus.create({
       name: "College of Staten Island",
+      address: "Staten Island",
       description: "A college on Staten Island",
     }),
     Campus.create({
       name: "John Jay College",
+      address: "Brooklyn",
+      description: "a college somewhere",
     }),
     Campus.create({
       name: "John Jay",
@@ -58,7 +61,7 @@ const seedDatabase = async () => {
           "orem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     }),
     Student.create({ firstName: "Daniel" }),
-    Student.create({ firstName: "Sally", campusId: 1 }),
+    Student.create({ firstName: "Sally" }),
   ]);
 };
 

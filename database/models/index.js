@@ -3,9 +3,16 @@
 const Campus = require("./campus");
 const Student = require("./student");
 
-Campus.hasMany(Student);
+Campus.hasMany(Student, {
+  foreignKey: 'campusId_FK',
+});
 
-Student.belongsTo(Campus);
+Student.belongsTo(Campus, {
+    foreignKey: 'campusId_FK',
+    allowNull: true,
+    targetKey: 'id',
+    onDelete: 'SET NULL',
+  });
 
 module.exports = {
   Campus,
