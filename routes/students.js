@@ -24,7 +24,7 @@ router.get("/", async (req, res, next) => {
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
   try {
-    const student = await Student.findByPk(id, {include: Campus});
+    const student = await Student.findByPk(id, { include: Campus });
     res.status(200).json(student);
   } catch (err) {
     next(err);
@@ -52,12 +52,20 @@ router.post("/", async (req, res, next) => {
  * Return: Updated student
  */
 router.put("/:id", async (req, res, next) => {
-  const receivedStudent = req.body;
   const { id } = req.params;
+  const { firstName, lastName, email, gpa, campusId_FK, imageUrl } = req.body;
+  const updatedObj = {
+    firstName: firstName,
+    lastName: lastName,
+    email: email,
+    gpa: gpa,
+    campusId_FK: campusId_FK,
+    imageUrl: imageUrl,
+  };
   try {
     const student = await Student.findByPk(id);
-    student.set(receivedStudent);
-    const updatedStudent = student.save();
+    await student.set(updatedObj);
+    const updatedStudent = await student.save();
     res.status(201).send(updatedStudent);
   } catch (err) {
     next(err);
