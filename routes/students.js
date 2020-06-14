@@ -23,27 +23,55 @@ router.get("/", async (req, res, next) => {
  */
 router.get("/:id", async (req, res, next) => {
   const { id } = req.params;
-  try{
-    const student = await Student.findByPk(id);
+  try {
+    const student = await Student.findByPk(id, {include: Campus});
     res.status(200).json(student);
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
-})
+});
 
 /**
  * Action: POST new student
  * ENDPOINT: /api/students/
  * Return: Newly created student
  */
-router.post("/", async (req,res,next) =>{
+router.post("/", async (req, res, next) => {
   const receivedStudent = req.body;
   try {
     const newStudent = await Student.create(receivedStudent);
     res.status(201).json(newStudent);
-  } catch(err) {
+  } catch (err) {
     next(err);
   }
-})
+});
 
+/**
+ * Action: Update student
+ * ENDPOINT: /api/students/:id
+ * Return: Updated student
+ */
+router.put("/:id", async (req, res, next) => {
+  const receivedStudent = req.body;
+  const { id } = req.params;
+  try {
+    const student = await Student.findByPk(id);
+    student.set(receivedStudent);
+    const updatedStudent = student.save();
+    res.status(201).send(updatedStudent);
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.delete("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  try {
+    const student = await Student.findByPk(id);
+    student.destroy();
+    res.sendStatus(204);
+  } catch (err) {
+    next(err);
+  }
+});
 module.exports = router;
