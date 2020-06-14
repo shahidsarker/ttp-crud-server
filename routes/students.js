@@ -18,4 +18,18 @@ router.get("/", async (req, res, next) => {
   }
 });
 
+router.put("/:id", async (req, res, next) => {
+  const { id } = req.params;
+  const { campusId } = req.body;
+  const updatedObj = { campusId: campusId };
+  try {
+    const student = await Student.findByPk(id);
+    await student.set(updatedObj);
+    const updatedStudent = await student.save();
+    res.status(201).send(updatedStudent);
+  } catch (err) {
+    next(err);
+  }
+});
+
 module.exports = router;
