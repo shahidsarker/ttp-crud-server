@@ -9,5 +9,5 @@ Student.belongsTo(Campus);
 
 module.exports = {
   Campus,
-  Student,
+  Student
 };

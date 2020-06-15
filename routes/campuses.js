@@ -71,7 +71,7 @@ router.post("/", async (req, res, next) => {
     name: name,
     address: address,
     imageUrl: imageUrl,
-    description: description,
+    description: description
   };
   try {
     // Create a new campus on the database
@@ -96,7 +96,7 @@ router.put("/:id", async (req, res, next) => {
     name: name,
     address: address,
     description: description,
-    imageUrl: imageUrl,
+    imageUrl: imageUrl
   };
   try {
     // if successfull:
